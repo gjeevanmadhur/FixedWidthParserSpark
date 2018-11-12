@@ -1,8 +1,8 @@
 #IDE
 .idea/
 *.iml
+*.XSLT
 
 # Maven
 target/
 
-*.XSLT
