@@ -1,2 +1,8 @@
 * linguist-vendored
 *.js linguist-vendored=false
+#IDE
+.idea/
+*.iml
+
+# Maven
+target/
