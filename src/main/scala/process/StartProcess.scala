@@ -51,8 +51,8 @@ object StartProcess extends App {
 
     val output = Try {
       sqlContext.createDataFrame(data, schema)
-        .write.mode(SaveMode.Overwrite).format("orc")
-        .save(s"/data/transformation/fiserv_datamart/cf_customer/run_date=2018-11-08")
+        .write.mode(SaveMode.Overwrite).format("orc").saveAsTable("fiserv_datamart.cf_transaction_tmp")
+       // .save(s"/data/transformation/fiserv_datamart/cf_transaction/run_date=2018-11-08")
 
     }
 
