@@ -1,7 +1,7 @@
 package utils
 
 import org.apache.commons.lang3.StringUtils
-import org.apache.hadoop.fs.FileSystem
+import org.apache.hadoop.fs.{FileSystem, Path}
 
 /* This class will fetch the table names from the list*/
 object FetchTables {
@@ -11,7 +11,7 @@ object FetchTables {
     case x if StringUtils.isEmpty(x) => List()
    // case x if x.contains(",") =>
 
-case x =>
+    case x =>
       x.split(",").map(_.trim).toList
 
   //  case _ => throw new IllegalStateException(s"Table list is not found")

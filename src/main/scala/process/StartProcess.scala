@@ -27,7 +27,7 @@ object StartProcess extends App {
   val json_parser = sqlContext.read.json(args(1)) // Parse JSON for schema
 
 
-  val tablenamesp = utils.FetchTables.getTableList("account", fs)
+  val tablenamesp = utils.FetchTables.getTableList("cf_account,cf_transaction", fs)
 
 
   val columnsFromTable = tablenamesp.map(passtableNames => utils.JSONParser.parseJSON(json_parser, sqlContext, passtableNames))
@@ -51,14 +51,17 @@ object StartProcess extends App {
 
     val output = Try {
       sqlContext.createDataFrame(data, schema)
-        .write.mode(SaveMode.Overwrite).format("orc").saveAsTable("fiserv_datamart.cf_transaction_tmp")
+        .write.mode(SaveMode.Overwrite).format("orc").saveAsTable(s"fiserv_datamart.$tablename")
        // .save(s"/data/transformation/fiserv_datamart/cf_transaction/run_date=2018-11-08")
+      sqlContext.sql(s"msck repair table fiserv_datamart.$tablename")
 
     }
+
 
     output match {
 
       case Success(v) => println("Program executed successfully " + v)
+        sqlContext.sql($"msck repair table fiserv_datamart.cf_transaction_tmp")
 
       case Failure(v) => println("Failed....." + v)
 
