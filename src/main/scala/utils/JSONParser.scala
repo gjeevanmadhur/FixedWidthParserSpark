@@ -11,11 +11,20 @@ object JSONParser {
   import org.apache.spark.sql.functions.udf
 
   val concatUDF = udf(concat_array _)
+  /**
+    * UDF to concat different columns
+    **/
   val zip = udf((xs: Seq[String], ys: Seq[String], zs: Seq[String], as: Seq[String]) => xs.zip(ys).zip(zs).zip(as))
 
 
-  /** This method is used to fetch the columns from the JSON for a given table **/
-
+  /**
+    * This method is used to fetch columns from JSON file
+    *
+    * @param json_parser
+    * @param sqlContext
+    * @param tablename
+    * @return
+    **/
   def parseJSON(json_parser: DataFrame, sqlContext: SQLContext, tablename: String) = {
 
     import org.apache.spark.sql.functions._
@@ -37,8 +46,14 @@ object JSONParser {
 
   }
 
-  /** This method is used to fecth the column positions from the json for a given table **/
-
+  /**
+    * This method is used to fetch column positions from JSON file
+    *
+    * @param json_parser
+    * @param sqlContext
+    * @param tablename
+    * @return
+    **/
   def getPositionofColumns(json_parser: DataFrame, sqlContext: SQLContext, tablename: String) = {
     import org.apache.spark.sql.functions._
     import sqlContext.implicits._
@@ -56,7 +71,9 @@ object JSONParser {
   }
 
 
-  /** endPos and startPos returns WrappedArray which needs to be merged and sorted **/
+  /**
+    * endPos and startPos returns WrappedArray which needs to be merged and sorted
+    **/
   def concat_array(firstarray: mutable.WrappedArray[String],
                    secondarray: mutable.WrappedArray[String]): mutable.WrappedArray[String] = {
     (firstarray ++ secondarray)

@@ -1,20 +1,28 @@
 package utils
 
-import org.apache.commons.lang3.StringUtils
-import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.hadoop.fs.FileSystem
+
+import scala.xml._
 
 /* This class will fetch the table names from the list*/
 object FetchTables {
 
-  def getTableList(tableList: String, fs: FileSystem): scala.List[String] = tableList match {
+  /**
+    * This method is used to fetch the tables from table XMl which is passed as paramater to the framework
+    *
+    * @param fs
+    * @param path
+    * @return
+    **/
 
-    case x if StringUtils.isEmpty(x) => List()
-   // case x if x.contains(",") =>
+  def getTableList(fs: FileSystem, path: String): List[String] = {
 
-    case x =>
-      x.split(",").map(_.trim).toList
+    val inputTableXml = XML.load(path)
 
-  //  case _ => throw new IllegalStateException(s"Table list is not found")
+    val tables = (inputTableXml \ "table")
+
+    tables.map(x => x.text).toList
+
   }
 
 
