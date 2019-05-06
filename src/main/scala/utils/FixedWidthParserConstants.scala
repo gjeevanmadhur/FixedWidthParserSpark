@@ -15,9 +15,9 @@ object FixedWidthParserConstants {
   val DateFormat = DateTimeFormat.forPattern("yyyy-MM-dd")
 
   //FIXME read these values from config file
-  val baseHdfsPath = "hdfs:///user/vekambaram/input_files/"
-  val baseoutputHdfsPath = "hdfs:///data/transformation/fiserv_datamart/"
-  val database_fiserv = "fiserv_datamart"
+  val baseHdfsPath = "hdfs:///user/user/input_files/"
+  val baseoutputHdfsPath = "hdfs:///data/transformation/f_datamart/"
+  val database_fiserv = "f_datamart"
 
 
   //FIXME hardcoded decimal scale and precision for decimal type as hive doesnt add the precision which is defined in hive
